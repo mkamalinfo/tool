@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online age calculator that determines your age in years, months, weeks, days, hours, minutes and seconds. Calculate time between two dates.">
+    <title>Age Calculator | Calculate Your Exact Age Online</title>
+    <style>
+        :root {
+            --primary: #4285f4;
+            --secondary: #34a853;
+            --accent: #ea4335;
+            --text: #333;
+            --light: #f5f5f5;
+            --border: #ddd;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        
+        h1 {
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2.2rem;
+        }
+        
+        .description {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #666;
+        }
+        
+        .calculator {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 600px) {
+            .calculator {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .date-selector {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+        }
+        
+        .date-selector h2 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .date-inputs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        select, input {
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        select {
+            flex: 1;
+        }
+        
+        input {
+            width: 60px;
+            text-align: center;
+        }
+        
+        .calendar-icon {
+            color: var(--primary);
+            cursor: pointer;
+            font-size: 1.2rem;
+            margin-left: 10px;
+        }
+        
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            display: block;
+            width: 100%;
+            margin: 20px 0;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #3367d6;
+        }
+        
+        .results {
+            background-color: var(--light);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .results h2 {
+            color: var(--secondary);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        
+        .result-item {
+            text-align: center;
+        }
+        
+        .result-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .result-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .info-section {
+            margin-top: 30px;
+        }
+        
+        .info-section h2 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .info-section p {
+            margin-bottom: 15px;
+        }
+        
+        .related-tools {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+        
+        .related-tools a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .related-tools a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Age Calculator</h1>
+        <p class="description">The Age Calculator can determine the age or interval between two dates. The calculated age will be displayed in years, months, weeks, days, hours, minutes, and seconds.</p>
+        
+        <div class="calculator">
+            <div class="date-selector">
+                <h2>Date of Birth</h2>
+                <div class="date-inputs">
+                    <select id="birth-month">
+                        <option value="0">Jan</option>
+                        <option value="1">Feb</option>
+                        <option value="2">Mar</option>
+                        <option value="3">Apr</option>
+                        <option value="4">May</option>
+                        <option value="5">Jun</option>
+                        <option value="6">Jul</option>
+                        <option value="7">Aug</option>
+                        <option value="8">Sep</option>
+                        <option value="9">Oct</option>
+                        <option value="10">Nov</option>
+                        <option value="11">Dec</option>
+                    </select>
+                    <input type="number" id="birth-day" min="1" max="31" value="15">
+                    <input type="number" id="birth-year" min="1900" max="2100" value="2025">
+                    <i class="fas fa-calendar-alt calendar-icon" onclick="showDatePicker('birth')"></i>
+                </div>
+                <p>Modify the values and click the calculate button to use</p>
+            </div>
+            
+            <div class="date-selector">
+                <h2>Age at the Date of</h2>
+                <div class="date-inputs">
+                    <select id="current-month">
+                        <option value="0">Jan</option>
+                        <option value="1">Feb</option>
+                        <option value="2">Mar</option>
+                        <option value="3">Apr</option>
+                        <option value="4">May</option>
+                        <option value="5">Jun</option>
+                        <option value="6">Jul</option>
+                        <option value="7">Aug</option>
+                        <option value="8">Sep</option>
+                        <option value="9">Oct</option>
+                        <option value="10">Nov</option>
+                        <option value="11">Dec</option>
+                    </select>
+                    <input type="number" id="current-day" min="1" max="31" value="15">
+                    <input type="number" id="current-year" min="1900" max="2100" value="2025">
+                    <i class="fas fa-calendar-alt calendar-icon" onclick="showDatePicker('current')"></i>
+                </div>
+            </div>
+        </div>
+        
+        <button onclick="calculateAge()">Calculate Age</button>
+        
+        <div class="results" id="results" style="display: none;">
+            <h2>Your Exact Age</h2>
+            <div class="result-grid">
+                <div class="result-item">
+                    <div class="result-value" id="years">0</div>
+                    <div class="result-label">Years</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-value" id="months">0</div>
+                    <div class="result-label">Months</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-value" id="weeks">0</div>
+                    <div class="result-label">Weeks</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-value" id="days">0</div>
+                    <div class="result-label">Days</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-value" id="hours">0</div>
+                    <div class="result-label">Hours</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-value" id="minutes">0</div>
+                    <div class="result-label">Minutes</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-value" id="seconds">0</div>
+                    <div class="result-label">Seconds</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="related-tools">
+            <p><strong>Related:</strong> <a href="#">Date Calculator</a> | <a href="#">Time Calculator</a></p>
+        </div>
+        
+        <div class="info-section">
+            <h2>About Age Calculation</h2>
+            <p>The age of a person can be counted differently in different cultures. This calculator is based on the most common age system. In this system, age increases on a person's birthday. For example, the age of a person who has lived for 3 years and 11 months is 3, and their age will increase to 4 on their next birthday one month later. Most western countries use this age system.</p>
+            
+            <p>In some cultures, age is expressed by counting years with or without including the current year. For example, a person who is twenty years old is the same age as another person who is in their twenty-first year of life. In one of the traditional Chinese age systems, people are born at age 1 and their age increases up at the Traditional Chinese New Year rather than their birthday. For example, if one baby is born just one day before the Traditional Chinese New Year, 2 days later, the baby will be 2 even though he/she is only 2 days old.</p>
+            
+            <p>In some situations, the months and day result of this age calculator may be confusing, especially when the starting date is the end of a month. For example, we count Feb. 20 to Mar. 20 to be one month. However, there are two ways to calculate the age from Feb. 28, 2022 to Mar. 31, 2022. If we consider Feb. 28 to Mar. 28 to be one month, then the result is one month and 3 days. If we consider both Feb. 28 and Mar. 31 as the end of the month, then the result is one month. Both calculation results are reasonable. Similar situations exist for dates like Apr. 30 to May 31, May 30 to June 30, etc. The confusion comes from the uneven number of days in different months. In our calculations, we use the former method.</p>
+        </div>
+    </div>
+
+    <script>
+        // Set current date as default
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date();
+            document.getElementById('current-month').value = today.getMonth();
+            document.getElementById('current-day').value = today.getDate();
+            document.getElementById('current-year').value = today.getFullYear();
+            
+            // Set birth date to 30 years ago as example
+            const birthDate = new Date();
+            birthDate.setFullYear(today.getFullYear() - 30);
+            document.getElementById('birth-month').value = birthDate.getMonth();
+            document.getElementById('birth-day').value = birthDate.getDate();
+            document.getElementById('birth-year').value = birthDate.getFullYear();
+        });
+
+        function showDatePicker(type) {
+            // In a real implementation, this would show a calendar picker
+            alert(`Calendar picker for ${type} date would appear here`);
+        }
+
+        function calculateAge() {
+            // Get input values
+            const birthMonth = parseInt(document.getElementById('birth-month').value);
+            const birthDay = parseInt(document.getElementById('birth-day').value);
+            const birthYear = parseInt(document.getElementById('birth-year').value);
+            
+            const currentMonth = parseInt(document.getElementById('current-month').value);
+            const currentDay = parseInt(document.getElementById('current-day').value);
+            const currentYear = parseInt(document.getElementById('current-year').value);
+            
+            // Create Date objects
+            const birthDate = new Date(birthYear, birthMonth, birthDay);
+            const currentDate = new Date(currentYear, currentMonth, currentDay);
+            
+            // Validate dates
+            if (birthDate > currentDate) {
+                alert("Birth date cannot be in the future");
+                return;
+            }
+            
+            // Calculate difference in milliseconds
+            const diffMs = currentDate - birthDate;
+            
+            // Calculate different units
+            const diffSeconds = Math.floor(diffMs / 1000);
+            const diffMinutes = Math.floor(diffSeconds / 60);
+            const diffHours = Math.floor(diffMinutes / 60);
+            const diffDays = Math.floor(diffHours / 24);
+            const diffWeeks = Math.floor(diffDays / 7);
+            
+            // Calculate years and months
+            let years = currentYear - birthYear;
+            let months = currentMonth - birthMonth;
+            
+            if (currentDay < birthDay) {
+                months--;
+            }
+            
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+            
+            // Calculate remaining days after full months
+            const tempDate = new Date(birthDate);
+            tempDate.setFullYear(birthYear + years);
+            tempDate.setMonth(birthMonth + months);
+            
+            const remainingDays = Math.floor((currentDate - tempDate) / (1000 * 60 * 60 * 24));
+            
+            // Update the UI
+            document.getElementById('years').textContent = years;
+            document.getElementById('months').textContent = months;
+            document.getElementById('weeks').textContent = diffWeeks;
+            document.getElementById('days').textContent = diffDays;
+            document.getElementById('hours').textContent = diffHours;
+            document.getElementById('minutes').textContent = diffMinutes;
+            document.getElementById('seconds').textContent = diffSeconds;
+            
+            // Show results
+            document.getElementById('results').style.display = 'block';
+            
+            // Scroll to results
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
